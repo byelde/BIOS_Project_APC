@@ -327,7 +327,21 @@ def advanced_tela() :
 			# imprima com cor 'color_tela' Usar senha: e com a cor 'color_ativo' On
 			# imprima com cor 'color_tela' Senha: e com a cor 'color_editavel' 4 espaços em branco
 
-
+	elif menu_ativo == 1:
+		if item_tela == 0:
+			if password_on == False:
+				print(f'{color_tela}{"Usar senha"}{color_ativo}{"Off"}{Style.reset}')
+				print(f'{color_tela}{"Senha"}{color_editavel}{"    "}{Style.reset}')
+			elif password_on == True:
+				print(f'{color_tela}{"Usar senha"}{color_ativo}{"On"}{Style.reset}')
+				print(f'{color_tela}{"Senha"}{color_editavel}{"1234"}{Style.reset}')
+		elif item_tela == 1:
+			if password_on == False:
+				print(f'{color_tela}{"Usar senha"}{color_ativo}{"Off"}{Style.reset}')
+				print(f'{color_tela}{"Senha"}{color_movendo}{"    "}{Style.reset}')
+			elif password_on == True:
+				print(f'{color_tela}{"Usar senha"}{color_ativo}{"On"}{Style.reset}')
+				print(f'{color_tela}{"Senha"}{color_movendo}{"1234"}{Style.reset}')
 	# SE o menu ativado for 1 (observe as variáveis globais)
 		# SE item na tela que está sendo navegado é o 0 (On ou Off)
 			# SE senha NÃO está sendo utilizada
