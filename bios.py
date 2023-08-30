@@ -363,15 +363,38 @@ def boot_tela() :
 	'''
 	Exibe o conteúdo da tela boot, quando selecionada
 	'''
-	pass
+	# pass
 	# declare o uso da variavel global 'disp1'
 	# declare o uso da variavel global 'disp2'
 	# declare o uso da variavel global 'disp3'
 	
+	for c in range(20):
+		print(f'{color_tela}{"":^80}{Style.reset}')
 	# imprima 20 vezes uma linha, com 80 espaços em branco
 	# usando  a cor 'color_tela'
 	
+	sys.stdout.write(f'\x1b[{8};{0}H')
 	# posicione o cursor na linha 8 coluna 0
+
+	if menu_ativo != 2:
+		print(f'{color_tela}{"1° dispositivo de boot: "}{color_editavel}{disp1}{Style.reset}')
+		print(f'{color_tela}{"2° dispositivo de boot: "}{color_editavel}{disp2}{Style.reset}')
+		print(f'{color_tela}{"3° dispositivo de boot: "}{color_editavel}{disp3}{Style.reset}')
+	elif menu_ativo == 2:
+		if item_tela == 0:
+			print(f'{color_tela}{"1° dispositivo de boot: "}{color_movendo}{disp1}{Style.reset}')
+		if item_tela != 0:
+			print(f'{color_tela}{"1° dispositivo de boot: "}{color_editavel}{disp1}{Style.reset}')
+
+		if item_tela == 1:
+			print(f'{color_tela}{"2° dispositivo de boot: "}{color_movendo}{disp2}{Style.reset}')
+		if item_tela != 1:
+			print(f'{color_tela}{"2° dispositivo de boot: "}{color_editavel}{disp2}{Style.reset}')
+
+		if item_tela == 2:
+			print(f'{color_tela}{"3° dispositivo de boot: "}{color_movendo}{disp3}{Style.reset}')
+		if item_tela != 2:
+			print(f'{color_tela}{"3° dispositivo de boot: "}{color_editavel}{disp3}{Style.reset}')
 	# SE o menu ativado NÃO for 2 (observe as variáveis globais) 
 		# imprima na cor 'color_tela' 1º dispositivo de boot: e na cor 'color_editavel' o valro da variável disp1
 		# imprima na cor 'color_tela' 2º dispositivo de boot: e na cor 'color_editavel' o valro da variável disp2
@@ -397,11 +420,16 @@ def mexit_tela() :
 	'''
 	Exibe o conteúdo da tela mexit_tela, quando selecionada
 	'''	
-	pass
+	# pass
+	for c in range(20):
+		print(f'{color_tela}{"":^80}{Style.reset}')
 	# imprima 20 vezes uma linha, com 80 espaços em branco
 	# usando  a cor 'color_tela'
 	
+	sys.stdout.write(f'\x1b[{8};{0}H')
 	# posicione o cursor na linha 8 coluna 0
+
+	print(f'{color_tela}{"Pressione ENTER para sair!"}  {Style.reset}')
 	# imprima a descrição 'Pressione ENTER para sair!' usando a cor 'color_tela'
 
 
@@ -426,6 +454,24 @@ def on_press(key):
 		'''
 		if (key.char == 'q' or key.char == 'Q') :
 			exit()
+
+		if (key.char == '+'):
+			if menu_ativo == 1:
+				set_usar_senha('1234')
+			if menu_ativo == 2:
+				if item_tela == 0:
+					dispax = disp1
+					disp1 = disp2
+					disp2 = dispax
+				elif item_tela == 1:
+					dispax = disp2
+					disp2 = disp3
+					disp3 = dispax
+				elif item_tela == 2:
+					dispax = disp3
+					disp3 = disp1
+					disp1 = dispax
+				save_boot(disp1, disp2, disp3)
 		# SE o caractere pressionado é '+'
 			# SE a tela ativa é advanced
 				# chame a função que seta o uso da senha, passando 1234 como parametro
@@ -437,6 +483,27 @@ def on_press(key):
 				# SE item na tela que está sendo navegado é 2
 					# realize troca dos conteúdos das variáveis disp3 e disp1	
 				# chame a função que salva a ordem de boot passando disp1, disp2 e disp3 como parametros (observe boot.py)
+		
+		elif (key.char == '-'):
+			if menu_ativo == 1:
+				set_usar_senha('')
+			if menu_ativo == 2:
+				if item_tela == 0:
+					dispax = disp3
+					disp3 = disp1
+					disp1 = dispax
+					
+				elif item_tela == 1:
+					dispax = disp1
+					disp1 = disp2
+					disp2 = dispax
+
+				elif item_tela == 2:
+					dispax = disp2
+					disp2 = disp3
+					disp3 = dispax
+					
+				save_boot(disp1, disp2, disp3)
 		# SE o caractere pressionado é '-'
 			# SE a tela ativa é advanced
 				# chame a função que seta o uso da senha, com o parametro vazio
@@ -464,29 +531,46 @@ def on_press(key):
 		# não precisa alterar as linhas anteriores
 		###########################################
 		
-		'''if (key == keyboard.Key.up): # seta para cima
+		if (key == keyboard.Key.up): # seta para cima
+			if item_tela == 0:
+				item_tela = 3
+			else:
+				item_tela -= 1
 			# atualize o item da tela para o anterior
 			# ex. item na tela é 1 (um), deve ser atualizado para 0
 			# ex. item na tela é 2 (dois), deve ser atualizado para 1
 			# Cuiado! só existem 'mod' (variável anterior) itens em cada tela. Valor deve circular, como em um relógio
 		elif (key == keyboard.Key.down): # seta para baixo
+			if item_tela == 3:
+				item_tela = 0
+			else:
+				item_tela += 1
 			# atualize o item da tela para o anterior
 			# ex. item na tela é 0 (zero), deve ser atualizado para 1
 			# ex. item na tela é 1 (um), deve ser atualizado para 2
 			# Cuiado! só existem 'mod' (variável anterior) itens em cada tela. Valor deve circular, como em um relógio
 			# Esse calculo pode ser realizado em UMA linha
 		elif (key == keyboard.Key.left): # seta esquerda
+			if menu_ativo == 0:
+				menu_ativo = 3
+			else:
+				menu_ativo -= 1
 			# atualize o menu ativo para o anterior
 			# ex. menu é 0 (zero), deve ser atualizado para 4
 			# ex. menu é 1 (um), deve ser atualizado para 0
 			# Cuiado! só existem 4 menus. Valor deve circular, como em um relógio
 			# Esse calculo pode ser realizado em UMA linha
 		elif (key == keyboard.Key.right): # seta direita
+			if menu_ativo == 3:
+				menu_ativo = 0
+			else:
+				menu_ativo += 1
 			# atualize o menu ativo para o proximo
 			# ex. menu é 0 (zero), deve ser atualizado para 1
 			# ex. menu é 1 (um), deve ser atualizado para 2
 			# Cuiado! só existem 4 menus. Valor deve circular, como em um relógio
-			# Esse calculo pode ser realizado em UMA linha
+			# Esse calculo pode ser realiza
+			# do em UMA linha
 		elif (menu_ativo == 3) and (key == keyboard.Key.enter):
 			exit()
 		elif (key == keyboard.Key.enter) : # enter
@@ -494,7 +578,7 @@ def on_press(key):
 			item_tela = 0
 
 			if (menu_ativo == 2) :
-				save_boot(disp1, disp2, disp3)'''
+				save_boot(disp1, disp2, disp3)
 			
 	# chame a funcao para atualizar a tela
 
@@ -511,7 +595,7 @@ def on_release(key):
 ####################################################
 # Chegou aqui, retire os comentários e execute
 ####################################################
-'''
+
 try:
 	limpar_tela()
 	tela()
@@ -524,4 +608,3 @@ try:
 except :
 	limpar_tela()
 	print("BIOS finalizada!")
-'''
