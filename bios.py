@@ -72,7 +72,10 @@ def atualizar() :
 	A tela será redesenhada constantemente, essa função deve executar 
 	um conjunto de ações
 	'''
-	pass
+	# pass
+	limpar_tela()
+	tela()
+	end()
 	# chame a função para limpar tela
 	# chame a função para desenhar a tela
 	# chame a função end para resetar as cores
@@ -128,7 +131,7 @@ def advanced_menu() :
 	'''
 	# pass
 	sys.stdout.write(f'\x1b[{2};{12}H')
-	if menu_ativo == 0:
+	if menu_ativo == 1:
 		print(f'{color_selecionado}{"Advanced":^12}{Style.reset}')
 	else:
 		print(f'{color_inativo}{"Advanced":^12}{Style.reset}')
@@ -146,7 +149,7 @@ def boot_menu():
 	'''
 	# pass
 	sys.stdout.write(f'\x1b[{2};{22}H')
-	if menu_ativo == 0:
+	if menu_ativo == 2:
 		print(f'{color_selecionado}{"Boot":^12}{Style.reset}')
 	else:
 		print(f'{color_inativo}{"Boot":^12}{Style.reset}')
@@ -164,7 +167,7 @@ def exit_menu() :
 	'''
 	# pass
 	sys.stdout.write(f'\x1b[{2};{32}H')
-	if menu_ativo == 0:
+	if menu_ativo == 3:
 		print(f'{color_selecionado}{"Exit":^12}{Style.reset}')
 	else:
 		print(f'{color_inativo}{"Exit":^12}{Style.reset}')
@@ -314,11 +317,11 @@ def advanced_tela() :
 
 	if menu_ativo != 1:
 		if password_on == False:
-			print(f'{color_tela}{"Usar senha"}{color_ativo}{"Off"}{Style.reset}')
-			print(f'{color_tela}{"Senha"}{color_editavel}{"    "}{Style.reset}')
+			print(f'{color_tela}{"Usar senha "}{color_ativo}{"Off"}{Style.reset}')
+			print(f'{color_tela}{"Senha "}{color_editavel}{"    "}{Style.reset}')
 		elif password_on == True:
-			print(f'{color_tela}{"Usar senha"}{color_ativo}{"On"}{Style.reset}')
-			print(f'{color_tela}{"Senha"}{color_editavel}{"    "}{Style.reset}')
+			print(f'{color_tela}{"Usar senha "}{color_ativo}{"On"}{Style.reset}')
+			print(f'{color_tela}{"Senha "}{color_editavel}{"    "}{Style.reset}')
 	# SE o menu ativado NÃO for 1 (observe as variáveis globais)
 		# SE senha NÃO está sendo utilizada 
 			# imprima com cor 'color_tela' Usar senha: e com a cor 'color_ativo' Off
@@ -330,18 +333,18 @@ def advanced_tela() :
 	elif menu_ativo == 1:
 		if item_tela == 0:
 			if password_on == False:
-				print(f'{color_tela}{"Usar senha"}{color_ativo}{"Off"}{Style.reset}')
-				print(f'{color_tela}{"Senha"}{color_editavel}{"    "}{Style.reset}')
+				print(f'{color_tela}{"Usar senha  "}{color_ativo}{"Off"}{Style.reset}')
+				print(f'{color_tela}{"Senha "}{color_editavel}{"    "}{Style.reset}')
 			elif password_on == True:
-				print(f'{color_tela}{"Usar senha"}{color_ativo}{"On"}{Style.reset}')
-				print(f'{color_tela}{"Senha"}{color_editavel}{"1234"}{Style.reset}')
+				print(f'{color_tela}{"Usar senha "}{color_ativo}{"On"}{Style.reset}')
+				print(f'{color_tela}{"Senha "}{color_editavel}{"1234"}{Style.reset}')
 		elif item_tela == 1:
 			if password_on == False:
-				print(f'{color_tela}{"Usar senha"}{color_ativo}{"Off"}{Style.reset}')
-				print(f'{color_tela}{"Senha"}{color_movendo}{"    "}{Style.reset}')
+				print(f'{color_tela}{"Usar senha "}{color_ativo}{"Off"}{Style.reset}')
+				print(f'{color_tela}{"Senha "}{color_movendo}{"    "}{Style.reset}')
 			elif password_on == True:
-				print(f'{color_tela}{"Usar senha"}{color_ativo}{"On"}{Style.reset}')
-				print(f'{color_tela}{"Senha"}{color_movendo}{"1234"}{Style.reset}')
+				print(f'{color_tela}{"Usar senha "}{color_ativo}{"On"}{Style.reset}')
+				print(f'{color_tela}{"Senha "}{color_movendo}{"1234"}{Style.reset}')
 	# SE o menu ativado for 1 (observe as variáveis globais)
 		# SE item na tela que está sendo navegado é o 0 (On ou Off)
 			# SE senha NÃO está sendo utilizada
@@ -440,10 +443,16 @@ def on_press(key):
 	'''
 	Trata todos os eventos de teclado no programa
 	'''
+	global menu_ativo
+	global enter
+	global item_tela
 	# declare o uso da variavel global 'menu_ativo'
 	# declare o uso da variavel global 'enter'
 	# declare o uso da variavel global 'item_tela'
 
+	global disp1
+	global disp2
+	global disp3
 	# declare o uso da variavel global 'disp1'
 	# declare o uso da variavel global 'disp2'
 	# declare o uso da variavel global 'disp3'
@@ -452,12 +461,13 @@ def on_press(key):
 		'''
 		Quando o caractere q é presionado, sai do programa
 		'''
-		if (key.char == 'q' or key.char == 'Q') :
-			exit()
+		if (key.char == 'q') :
+			sys.exit()
 
 		if (key.char == '+'):
 			if menu_ativo == 1:
-				set_usar_senha('1234')
+				senha_ativa = get_usar_senha
+				set_usar_senha(not senha_ativa)
 			if menu_ativo == 2:
 				if item_tela == 0:
 					dispax = disp1
@@ -568,11 +578,12 @@ def on_press(key):
 			# atualize o menu ativo para o proximo
 			# ex. menu é 0 (zero), deve ser atualizado para 1
 			# ex. menu é 1 (um), deve ser atualizado para 2
+			
 			# Cuiado! só existem 4 menus. Valor deve circular, como em um relógio
 			# Esse calculo pode ser realiza
 			# do em UMA linha
 		elif (menu_ativo == 3) and (key == keyboard.Key.enter):
-			exit()
+			sys.exit()
 		elif (key == keyboard.Key.enter) : # enter
 			enter     = menu_ativo
 			item_tela = 0
@@ -581,6 +592,7 @@ def on_press(key):
 				save_boot(disp1, disp2, disp3)
 			
 	# chame a funcao para atualizar a tela
+		atualizar()
 
 def on_release(key):
 	'''
@@ -599,6 +611,7 @@ def on_release(key):
 try:
 	limpar_tela()
 	tela()
+	input()
 	end()
 
 	# Collect events until released

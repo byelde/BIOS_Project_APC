@@ -10,13 +10,12 @@ def get_usar_senha() :
 	'False' se a primeira linha do arquivo contiver 'False'
 	'''
 	# pass
-	advanced = open('advanced.txt', "r")
-	line = advanced.readline()
-	return line
-	if line == 'True\n':
-		return True
-	elif line == 'False\n':
-		return False
+	with open('advanced.txt', 'r') as arquivo:
+		linha = arquivo.readline()
+		if linha == 'True\n':
+			return True
+		else:
+			return False
 	# dica: utilize a instrução with
 		# dentro do bloco with leia UMA linha do arquivo
 		# salve o conteúdo desta linha em uma variável
@@ -45,12 +44,13 @@ def set_usar_senha(senha="") :
 	--------------------
 	'''
 	# pass
-	advanced_file = open('advanced.txt',"w")
-	if senha == '':
-		advanced_file.write('False\n')
-	else:
-		advanced_file.write(f'True\n{senha}')
-
+	with open('advanced.txt', 'w') as arquivo:
+		if senha == '':
+			arquivo.write('False\n')
+			arquivo.write('1234')
+		else:
+			arquivo.write('True\n')
+			arquivo.write('1234') 
 	# abra o arquivo "advanced.txt" para escrita
 	# dica: utilize a instrução with
 		# SE o valor da variável senha for vazio
