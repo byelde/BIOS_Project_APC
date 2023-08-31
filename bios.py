@@ -333,7 +333,7 @@ def advanced_tela() :
 	elif menu_ativo == 1:
 		if item_tela == 0:
 			if password_on == False:
-				print(f'{color_tela}{"Usar senha  "}{color_ativo}{"Off"}{Style.reset}')
+				print(f'{color_tela}{"Usar senha "}{color_ativo}{"Off"}{Style.reset}')
 				print(f'{color_tela}{"Senha "}{color_editavel}{"    "}{Style.reset}')
 			elif password_on == True:
 				print(f'{color_tela}{"Usar senha "}{color_ativo}{"On"}{Style.reset}')
@@ -590,7 +590,6 @@ def on_press(key):
 
 			if (menu_ativo == 2) :
 				save_boot(disp1, disp2, disp3)
-			
 	# chame a funcao para atualizar a tela
 		atualizar()
 
