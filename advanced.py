@@ -47,10 +47,10 @@ def set_usar_senha(senha="") :
 	with open('advanced.txt', 'w') as arquivo:
 		if senha == '':
 			arquivo.write('False\n')
-			arquivo.write('1234')
+			arquivo.write(senha)
 		else:
 			arquivo.write('True\n')
-			arquivo.write('1234') 
+			arquivo.write(senha) 
 	# abra o arquivo "advanced.txt" para escrita
 	# dica: utilize a instrução with
 		# SE o valor da variável senha for vazio
@@ -61,4 +61,4 @@ def set_usar_senha(senha="") :
 			# escreva o conteúdo da variável senha
 
 # print(get_usar_senha())
-set_usar_senha('1234')
+get_usar_senha()

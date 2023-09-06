@@ -87,8 +87,7 @@ def titulo() :
 	'''
 	print(f'{color}{"Projeto Bios":^80}{Style.reset}')
 	# crie uma string de 80 colunas, "Projeto BIOS" deve ser centralizado
-	# impria a string utilizando a cor 'color'
-
+	# impria a string utilizando a cor 'color'.
 
 def menu() :
 	'''
@@ -466,22 +465,26 @@ def on_press(key):
 
 		if (key.char == '+'):
 			if menu_ativo == 1:
-				senha_ativa = get_usar_senha
-				set_usar_senha(not senha_ativa)
+				# senha_ativa = get_usar_senha()
+				set_usar_senha('1234')
 			if menu_ativo == 2:
 				if item_tela == 0:
-					dispax = disp1
-					disp1 = disp2
-					disp2 = dispax
+					# dispax = disp1
+					# disp1 = disp2
+					# disp2 = dispax
+					disp1, disp2 = disp2, disp1
 				elif item_tela == 1:
-					dispax = disp2
-					disp2 = disp3
-					disp3 = dispax
+					# dispax = disp2
+					# disp2 = disp3
+					# disp3 = dispax
+					disp2, disp3 = disp3, disp2
 				elif item_tela == 2:
-					dispax = disp3
-					disp3 = disp1
-					disp1 = dispax
+					# dispax = disp3
+					# disp3 = disp1
+					# disp1 = dispax
+					disp1, disp3 = disp3, disp1
 				save_boot(disp1, disp2, disp3)
+			atualizar()
 		# SE o caractere pressionado é '+'
 			# SE a tela ativa é advanced
 				# chame a função que seta o uso da senha, passando 1234 como parametro
@@ -499,19 +502,22 @@ def on_press(key):
 				set_usar_senha('')
 			if menu_ativo == 2:
 				if item_tela == 0:
-					dispax = disp3
-					disp3 = disp1
-					disp1 = dispax
+					# dispax = disp3
+					# disp3 = disp1
+					# disp1 = dispax
+					disp1, disp3 = disp3, disp1
 					
 				elif item_tela == 1:
-					dispax = disp1
-					disp1 = disp2
-					disp2 = dispax
+					# dispax = disp1
+					# disp1 = disp2
+					# disp2 = dispax
+					disp1, disp2 = disp2, disp1
 
 				elif item_tela == 2:
-					dispax = disp2
-					disp2 = disp3
-					disp3 = dispax
+					# dispax = disp2
+					# disp2 = disp3
+					# disp3 = dispax
+					disp2, disp3 = disp3, disp2
 					
 				save_boot(disp1, disp2, disp3)
 		# SE o caractere pressionado é '-'
@@ -525,6 +531,8 @@ def on_press(key):
 				# SE item na tela que está sendo navegado é 2
 					# realize troca dos conteúdos das variáveis disp3 e disp2		
 				# chame a função que salva a ordem de boot passando disp1, disp2 e disp3 como parametros (observe boot.py)
+			
+			atualizar()
 		else :
 			pass
 	except AttributeError:
@@ -542,39 +550,36 @@ def on_press(key):
 		###########################################
 		
 		if (key == keyboard.Key.up): # seta para cima
-			if item_tela == 0:
-				item_tela = 3
-			else:
-				item_tela -= 1
+			# if item_tela == 0:
+			# 	item_tela = 3
+			# else:
+			# 	item_tela -= 1
+			item_tela = (item_tela - 1)%4
 			# atualize o item da tela para o anterior
 			# ex. item na tela é 1 (um), deve ser atualizado para 0
 			# ex. item na tela é 2 (dois), deve ser atualizado para 1
 			# Cuiado! só existem 'mod' (variável anterior) itens em cada tela. Valor deve circular, como em um relógio
 		elif (key == keyboard.Key.down): # seta para baixo
-			if item_tela == 3:
-				item_tela = 0
-			else:
-				item_tela += 1
+			# if item_tela == 3:
+			# 	item_tela = 0
+			# else:
+			# 	item_tela += 1
+			item_tela = (item_tela + 1)%4
+				
 			# atualize o item da tela para o anterior
 			# ex. item na tela é 0 (zero), deve ser atualizado para 1
 			# ex. item na tela é 1 (um), deve ser atualizado para 2
 			# Cuiado! só existem 'mod' (variável anterior) itens em cada tela. Valor deve circular, como em um relógio
 			# Esse calculo pode ser realizado em UMA linha
 		elif (key == keyboard.Key.left): # seta esquerda
-			if menu_ativo == 0:
-				menu_ativo = 3
-			else:
-				menu_ativo -= 1
+			menu_ativo = (menu_ativo - 1)%4
 			# atualize o menu ativo para o anterior
 			# ex. menu é 0 (zero), deve ser atualizado para 4
 			# ex. menu é 1 (um), deve ser atualizado para 0
 			# Cuiado! só existem 4 menus. Valor deve circular, como em um relógio
 			# Esse calculo pode ser realizado em UMA linha
 		elif (key == keyboard.Key.right): # seta direita
-			if menu_ativo == 3:
-				menu_ativo = 0
-			else:
-				menu_ativo += 1
+			menu_ativo = (menu_ativo + 1)%4
 			# atualize o menu ativo para o proximo
 			# ex. menu é 0 (zero), deve ser atualizado para 1
 			# ex. menu é 1 (um), deve ser atualizado para 2
