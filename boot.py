@@ -8,18 +8,10 @@ def get_disp1() :
 	indicado na primeira linha, sem o caractere especial \n
 	Exemplo de retorno 'SSD/HDD'
 	'''
-	# pass
 	get_disp1_file = open('boot.txt', 'r')
-	# abra o arquivo "boot.txt" para leitura
 	with get_disp1_file:
 		disp1 = get_disp1_file.readlines()
 		return disp1[0]
-
-	# dica: utilize a instrução with
-		# dentro do bloco with leia UMA linha do arquivo
-		# e substitua o caractere especial '\n' por vazio ''
-		# esse conteúdo deve ser salvo em uma variável ex. disp1
-	# fora da instrução with, retorne o conteúdo da variável 'disp1'
 
 
 def get_disp2() :
@@ -32,14 +24,6 @@ def get_disp2() :
 	with get_disp2_file:
 		disp2 = get_disp2_file.readlines()
 		return disp2[1]
-	# abra o arquivo "boot.txt" para leitura
-	# dica: utilize a instrução with
-		# dentro do bloco with leia UMA linha do arquivo
-		# essa linha será ignorada
-		# leia a segunda linha do arquivo
-		# e substitua o caractere especial '\n' por vazio ''
-		# esse conteúdo deve ser salvo em uma variável ex. disp2
-	# fora da instrução with, retorne o conteúdo da variável 'disp2'
 
 
 def get_disp3() :
@@ -52,16 +36,6 @@ def get_disp3() :
 	with get_disp3_file:
 		disp3 = get_disp3_file.readlines()
 		return disp3[2]
-	# abra o arquivo "boot.txt" para leitura
-	# dica: utilize a instrução with
-		# dentro do bloco with leia UMA linha do arquivo
-		# essa linha será ignorada
-		# leia a segunda linha do arquivo
-		# essa linha será ignorada
-		# leia a terceira linha do arquivo
-		# e substitua o caractere especial '\n' por vazio ''
-		# esse conteúdo deve ser salvo em uma variável ex. disp2
-	# fora da instrução with, retorne o conteúdo da variável 'disp2'
 
 
 def save_boot(disp1, disp2, disp3) :
@@ -79,10 +53,6 @@ def save_boot(disp1, disp2, disp3) :
 	for line in lines:
 		sv_return += line
 	return sv_return
-	# abra o arquivo "boot.txt" para escrita
-	# dica: utilize a instrução with
-		# dentro do bloco with escreva uma linha com disp1 e \n
-		# escreva uma linha com disp2 e \n
-		# escreva uma linha com disp3 e \n
+
 
 print(save_boot(get_disp1(), get_disp2(), get_disp3()))

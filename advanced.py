@@ -16,13 +16,6 @@ def get_usar_senha() :
 			return True
 		else:
 			return False
-	# dica: utilize a instrução with
-		# dentro do bloco with leia UMA linha do arquivo
-		# salve o conteúdo desta linha em uma variável
-		# SE o valor da variável corresponder a 'False\n'
-			# retorne False
-		# SE o valor da variável corresponder a 'True\n'
-			# retorne True
 
 
 def set_usar_senha(senha="") :
@@ -51,14 +44,3 @@ def set_usar_senha(senha="") :
 		else:
 			arquivo.write('True\n')
 			arquivo.write(senha) 
-	# abra o arquivo "advanced.txt" para escrita
-	# dica: utilize a instrução with
-		# SE o valor da variável senha for vazio
-			# escreva "False\n"
-			# escreva o conteúdo da variável senha
-		# SE o valor da variável senha NÃO for vazio
-			# escreva "True\n"
-			# escreva o conteúdo da variável senha
-
-# print(get_usar_senha())
-get_usar_senha()
